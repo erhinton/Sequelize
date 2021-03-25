@@ -1,28 +1,25 @@
 async function search(route) {
-    const request = await fetch(route);
-    const dataEntries = await request.json();
-    console.log(dataEntries)
-    return(dataEntries)
-};
+  const request = await fetch(route);
+  const dataEntries = await request.json();
+  return (dataEntries.data);
+}
 
-async function display(diningArray) {
-    const html = matchesArray.map((place) => `<li class="box">
-        <span class="name"><b>${place.name}</b></span><br>
-        <address><b>${place.address_line_1}</b><br>
-        <b>${place.zip}</b><address>
-        <br>
-        </li>`).join('');
+async function display(diningRows, table) {
+  const html = diningRows.map((hall) => `<tr>
+        <th>${hall.hall_id}</th>
+        <th>${hall.hall_name}</th>
+        <th>${hall.hall_address}</th>
+    </tr>`).join('');
 
-      suggestions.innerHTML = html;
-
-    const suggestions = document.querySelector('#diningTable');
-  }
-
+  const suggestions = document.querySelector(table);
+  suggestions.innerHTML = html;
+}
 
 async function windowActions() {
-    diningArray = await search('/api/dining')
-    display(diningArray)
-};
-      
+  diningRows = await search('/api/dining');
+  for (const obj of diningRows) {
+    display(diningRows, '#diningTableBody');
+  }
+}
 
 window.onload = windowActions;
