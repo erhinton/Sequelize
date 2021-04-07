@@ -216,13 +216,17 @@ router.get("/restrictions/:restriction_id", async (req, res) => {
 /// /////////////////////////////////
 /// //////Custom SQL Endpoint////////
 /// /////////////////////////////////
-router.get("/custom", async (req, res) => {
+router.get("/mealMacro", async (req, res) => {
   try {
-    const result = await db.sequelizeDB.query(req.body.query, {
+    const meals = await db.Meals.findAll();
+    const macros = await db.Macros.findAll();
+    const result = await db.sequelizeDB.query('SELECT * FROM Macros INNER JOIN Meals ON Macros.meal_id=Meals.meal_id', {
       type: sequelize.QueryTypes.SELECT,
     });
     console.log("Result: ", result);
     res.json(result);
+
+
   } catch (err) {
     console.error(err);
     res.error("Server error");
