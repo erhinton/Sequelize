@@ -223,7 +223,6 @@ router.get("/mealMacro", async (req, res) => {
     const result = await db.sequelizeDB.query('SELECT * FROM Macros INNER JOIN Meals ON Macros.meal_id=Meals.meal_id', {
       type: sequelize.QueryTypes.SELECT,
     });
-    console.log("Result: ", result);
     res.json(result);
 
 
