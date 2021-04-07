@@ -26,9 +26,8 @@ async function makeChart() {
   };
 
   data = await getChartData('/api/mealmacro')
+  data = data.sort(() => 0.5 - Math.random());
   data = data.slice(0,10)
-  console.log(typeof data[0].serving_size)
-
 
   finalChartData = []
   for (const row of data) {
@@ -39,18 +38,17 @@ async function makeChart() {
       showInLegend: "true",
 
       dataPoints: [
-        { x: 'calories', y: row.calories},
-        { x: 'serving_size', y: row.serving_size},
-        { x: 'cholesterol', y: row.cholesterol},
-        { x: 'sodium', y: row.sodium},
-        { x: 'carbs', y: row.carbs},
-        { x: 'protein', y: row.protein},
-        { x: 'fat', y: row.fat}
+        { x: 10, y: row.calories, label : 'calories' },
+        { x: 20, y: row.serving_size, label : 'serving_size' },
+        { x: 30, y: row.cholesterol, label : 'cholesterol' },
+        { x: 40, y: row.sodium, label : 'sodium' },
+        { x: 50, y: row.carbs, label : 'carbs' },
+        { x: 60, y: row.protein, label : 'protein' },
+        { x: 70, y: row.fat, label : 'fat' }
       ]
     }
     )
   };
-  console.log(finalChartData)
 
   const chart = new CanvasJS.Chart('mealChart', {
     animationEnabled: true,
